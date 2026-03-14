@@ -1,7 +1,15 @@
+import Layout from "Layout"
+import { BrowserRouter } from "react-router"
+import Router from "Router"
+
 function App() {
   return (
     <>
-      <h1>Hello, world!</h1>
+      <BrowserRouter>
+        <Layout>
+          <Router />
+        </Layout>
+      </BrowserRouter>
     </>
   )
 }
