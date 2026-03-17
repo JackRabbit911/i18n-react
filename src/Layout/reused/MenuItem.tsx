@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import LangLink from "LangSwitcher/LangLink";
 
 type Props = {
   label: string;
@@ -13,14 +13,14 @@ const MenuItem = ({ label, link, extraClass, onClick }: Props) => {
   const className = `${commonClass} ${extraClass}${active ? ' menu-active' : ''}`
 
   return (
-    <Link to={link}>
+    <LangLink to={link}>
       <li
         className={className}
         onClick={onClick}
       >
         {label}
       </li>
-    </Link>
+    </LangLink>
   )
   }
 
