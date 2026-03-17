@@ -1,12 +1,14 @@
-import { Link } from "react-router"
-import LangChoice from "./LangChoice"
 import MenuItem from "./reused/MenuItem"
 import Sandwich from "./reused/icons/Sanwich"
 import ThemeToggler from "./reused/ThemeToggler"
 import { useRef } from "react"
+import { useTranslate } from "i18n/hooks"
+import LangSwitcher from "LangSwitcher"
+import LangLink from "LangSwitcher/LangLink"
 
 const Navbar = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null)
+  const __ = useTranslate()
 
   const closeDropDown = () => {
     detailsRef.current?.removeAttribute('open')
@@ -27,24 +29,24 @@ const Navbar = () => {
         </details>
         <div className="sm:flex-1">
           <div className="flex flex-row">
-            <Link to='/'>
+            <LangLink to='/'>
               <button
                 className="btn btn-ghost"
                 onClick={closeDropDown}
               >
-                Homepage
+                {__('Homepage')}
               </button>
-            </Link>
+            </LangLink>
             <ul className="menu menu-horizontal px-1 py-1 hidden sm:flex">
-              <MenuItem label="Page1" link='/page1' extraClass="mx-1 px-1 pt-1.5 pb-2" />
-              <MenuItem label="Page2" link='/page2' extraClass="mx-1 px-1 pt-1.5 pb-2" />
-              <MenuItem label="Page3" link='/page3' extraClass="mx-1 px-1 pt-1.5 pb-2" />
+              <MenuItem label={__('Page%', '1')} link='/page1' extraClass="mx-1 px-1 pt-1.5 pb-2" />
+              <MenuItem label={__('Page%', '2')} link='/page2' extraClass="mx-1 px-1 pt-1.5 pb-2" />
+              <MenuItem label={__('Page%', '3')} link='/page3' extraClass="mx-1 px-1 pt-1.5 pb-2" />
             </ul>
           </div>
         </div>
         <div className="flex-none">
           <ThemeToggler />
-          <LangChoice />
+          <LangSwitcher />
         </div>
       </nav>
     </div>
