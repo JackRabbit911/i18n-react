@@ -35,21 +35,8 @@ export const detectLangByUri = () => {
     return langs.includes(segments[0]) ? segments[0] : DEFAULT_LANG
 }
 
-export const getTranslateDefault = async (lang: string, keys: string[]): Promise<TranslateType> => {
-    const response = await fetch('http://localhost/api/gettranslate', {
-        method: 'POST',
-        headers: {
-            'Accept-Language': lang,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ filter: keys })
-    })
-
-    return response.json().then((data) => data.result)
-}
-
 export const fetchTranslate = (lang: string, keys: string[]): Promise<TranslateType> => (
-    fetch('http://localhost/api/gettranslate', {
+    fetch('http://localhost:8080/api/gettranslate', {
         method: 'POST',
         headers: {
             'Accept-Language': lang,
