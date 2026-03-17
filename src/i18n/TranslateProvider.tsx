@@ -24,8 +24,6 @@ const TranslateProvider = ({ children }: ChildrenProps) => {
     return sprintf(key, ...argv)
   }
 
-  console.log(location.pathname)
-
   useEffect(() => {
     const keys = Object.keys(translate)
     const diff = translateKeys.current.filter(x => !keys.includes(x));
@@ -36,7 +34,7 @@ const TranslateProvider = ({ children }: ChildrenProps) => {
           updateTranslate(translate, result, translateKeys, setTranslate)
         })
     }
-  }, [lang, location.pathname])
+  }, [location.pathname])
 
   return (
     <TranslateContext.Provider value={{ gettext, setTranslate, lang, setLang }}>
