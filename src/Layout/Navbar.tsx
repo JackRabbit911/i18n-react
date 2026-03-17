@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <div className="glass sticky top-0 z-40">
       <nav className="navbar md:container lg:w-3xl xl:w-6xl mx-auto flex flex-row justify-between">
-        <details className="dropdown md:hidden" ref={detailsRef}>
+        <details className="dropdown sm:hidden" ref={detailsRef}>
           <summary style={{ listStyle: 'none' }} className="btn btn-square btn-ghost">
             <Sandwich />
           </summary>
