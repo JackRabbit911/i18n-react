@@ -1,8 +1,9 @@
 import { useUnit } from "effector-react"
 import { useLocation } from "react-router"
+
 import Layout from "Layout"
 import Router from "Router"
-import { $subPageNum } from "pages/Page3/store"
+import { $subPageNum } from "pages/store"
 import TranslateProvider from "i18n/TranslateProvider"
 
 function App() {

@@ -3,7 +3,7 @@ import Cond4 from "./Cond4"
 import Cond5 from "./Cond5"
 import Cond6 from "./Cond6"
 import { useTranslate } from "i18n/hooks"
-import { $subPageNum, subPageSetted } from "./store"
+import { $subPageNum, subPageSetted } from "../store"
 
 const Page3 = () => {
   const globalNum = useUnit($subPageNum)
