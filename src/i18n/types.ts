@@ -13,10 +13,6 @@ export type TranslateContextType = {
   setLang: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export type ChildrenProps = {
-  children?: React.ReactNode;
-}
-
 export type GetTextProp = {
   __: GetText;
 }
