@@ -1,2 +1,8 @@
 content2: Unique content for the second page
 content21: Unique content for the first child of the second page
+Cond1Key: Content subject to 1
+Cond2Key: Content subject to 2
+Cond3Key: Content subject to 3
+Cond1GlobKey: Content under global condition 1
+Cond2GlobKey: Content under global condition 2
+Cond3GlobKey: Content under global condition 3
