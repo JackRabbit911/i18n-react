@@ -3,7 +3,7 @@ import Icon from "./Icon";
 import LangItem from "./LangItem";
 import { useSetLang } from "i18n/hooks";
 import { SUPPORTED_LANGS } from "i18n/config";
-import { subPageReset } from "pages/Page3/store";
+import { pageSetted, subPageReset } from "pages/store";
 
 const LangSwitcher = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null)
@@ -12,6 +12,7 @@ const LangSwitcher = () => {
 
   const onLang = (lang: string) => () => {
     setLang(lang)
+    pageSetted(0)
     subPageReset()
     detailsRef.current?.removeAttribute('open')
   }

@@ -1,16 +1,23 @@
-import MenuItem from "./reused/MenuItem"
-import Sandwich from "./reused/icons/Sanwich"
-import ThemeToggler from "./reused/ThemeToggler"
 import { useRef } from "react"
-import { useTranslate } from "i18n/hooks"
+
 import LangSwitcher from "LangSwitcher"
+import MenuItem from "./reused/MenuItem"
+import { pageSetted } from "pages/store"
+import { useTranslate } from "i18n/hooks"
+import Sandwich from "./reused/icons/Sanwich"
 import LangLink from "LangSwitcher/LangLink"
+import ThemeToggler from "./reused/ThemeToggler"
 
 const Navbar = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null)
   const __ = useTranslate()
 
   const closeDropDown = () => {
+    detailsRef.current?.removeAttribute('open')
+  }
+
+  const onBrandClick = () => {
+    pageSetted(0)
     detailsRef.current?.removeAttribute('open')
   }
 
@@ -22,9 +29,9 @@ const Navbar = () => {
             <Sandwich />
           </summary>
           <ul className="dropdown-content menu bg-base-100 max-h-[70vh] overflow-y-auto rounded-box z-50 min-w-38 p-2 mt-3 shadow-sm">
-            <MenuItem label="Page1" link='/page1' extraClass="p-2" onClick={closeDropDown} />
-            <MenuItem label="Page2" link='/page2' extraClass="p-2" onClick={closeDropDown} />
-            <MenuItem label="Page3" link='/page3' extraClass="p-2" onClick={closeDropDown} />
+            <MenuItem label="Page1" pageNum={1} extraClass="p-2" onClick={closeDropDown} />
+            <MenuItem label="Page2" pageNum={2} extraClass="p-2" onClick={closeDropDown} />
+            <MenuItem label="Page3" pageNum={3} extraClass="p-2" onClick={closeDropDown} />
           </ul>
         </details>
         <div className="sm:flex-1">
@@ -32,15 +39,15 @@ const Navbar = () => {
             <LangLink to='/'>
               <button
                 className="btn btn-ghost"
-                onClick={closeDropDown}
+                onClick={onBrandClick}
               >
                 {__('Homepage')}
               </button>
             </LangLink>
             <ul className="menu menu-horizontal px-1 py-1 hidden sm:flex">
-              <MenuItem label={__('Page%', '1')} link='/page1' extraClass="mx-1 px-1 pt-1.5 pb-2" />
-              <MenuItem label={__('Page%', '2')} link='/page2' extraClass="mx-1 px-1 pt-1.5 pb-2" />
-              <MenuItem label={__('Page%', '3')} link='/page3' extraClass="mx-1 px-1 pt-1.5 pb-2" />
+              <MenuItem label={__('Page%', '1')} pageNum={1} extraClass="mx-1 px-1 pt-1.5 pb-2" />
+              <MenuItem label={__('Page%', '2')} pageNum={2} extraClass="mx-1 px-1 pt-1.5 pb-2" />
+              <MenuItem label={__('Page%', '3')} pageNum={3} extraClass="mx-1 px-1 pt-1.5 pb-2" />
             </ul>
           </div>
         </div>
