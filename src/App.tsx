@@ -1,17 +1,22 @@
-import TranslateProvider from "i18n/TranslateProvider"
+import { useUnit } from "effector-react"
+import { useLocation } from "react-router"
 import Layout from "Layout"
-import { BrowserRouter } from "react-router"
 import Router from "Router"
+import { $subPageNum } from "pages/Page3/store"
+import TranslateProvider from "i18n/TranslateProvider"
 
 function App() {
+  const location = useLocation()
+  const globalNum = useUnit($subPageNum)
+
   return (
-    <BrowserRouter>
-      <TranslateProvider>
-        <Layout>
-          <Router />
-        </Layout>
-      </TranslateProvider>
-    </BrowserRouter>
+    <TranslateProvider
+      deps={[location.pathname, globalNum]}
+    >
+      <Layout>
+        <Router />
+      </Layout>
+    </TranslateProvider>
   )
 }
 
