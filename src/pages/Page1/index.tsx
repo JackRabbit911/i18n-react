@@ -5,7 +5,7 @@ const Page1 = () => {
   const __ = useTranslate()
 
   return (
-    <div>
+    <div className="p-1 border border-zinc-600">
       <h1>{__('Page%', 1)}</h1>
       <Child11 __={__} />
     </div>
