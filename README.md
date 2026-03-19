@@ -46,6 +46,7 @@ const Child = ({ __ }: Props) => {
 }
 ```
 *You can call the `useTranslate()` hook multiple times at any level of nesting inside `<TranslateProvider>` or pass the translation function as props*
+
 The server request function must be typed like this:
 ```typescript
 export type TranslateType = {
@@ -61,6 +62,7 @@ npm i
 npm run serve
 ```
 *In the console, you'll see which port the server is running on. In your browser, go to `localhost:PORT`*
+
 Check out the example configuration (file i18n/config.ts) and the example fetchTranslate() function (file i18n/utils.ts).
 
 That's all for now. Good luck!
