@@ -20,4 +20,4 @@ export type GetTextProp = {
 type SetLang = (lang: string) => void;
 export type SetLangHookType = [lang: string, setLang: SetLang];
 
-export type GetTranslateType = (lang: string, keys: string[]) => Promise<TranslateType>
+export type FetchTranslateType = (lang: string, keys: string[]) => Promise<TranslateType>

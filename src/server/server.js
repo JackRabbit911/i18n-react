@@ -4,7 +4,7 @@ import { getMap } from './i18n.js';
 
 const app = express();
 const PORT = 8080;
-const staticRootUrl = new URL('../dist/', import.meta.url).pathname;
+const staticRootUrl = new URL('../../dist/', import.meta.url).pathname;
 
 app.use(cors());
 app.use(express.static(staticRootUrl))
