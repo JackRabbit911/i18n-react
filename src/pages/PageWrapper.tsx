@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useParams } from "react-router"
 
 import Page1 from "./Page1"
@@ -7,17 +8,18 @@ import { pageSetted } from "./store"
 import ErrorCmp from "Layout/reused/ErrorCmp"
 
 const PageWrapper = () => {
-    const { page } = useParams()
+  const { page } = useParams()
+
+  useEffect(() => {
     pageSetted(Number(page) || 0)
+  }, [page])
 
-    console.log(page)
-
-    switch ( page ) {
-        case '1': return <Page1 />
-        case '2': return <Page2 />
-        case '3': return <Page3 />
-        default: return <ErrorCmp status={404} />
-    }
+  switch (page) {
+    case '1': return <Page1 />
+    case '2': return <Page2 />
+    case '3': return <Page3 />
+    default: return <ErrorCmp status={404} />
+  }
 }
 
 export default PageWrapper
