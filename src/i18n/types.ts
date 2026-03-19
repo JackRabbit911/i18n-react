@@ -13,10 +13,6 @@ export type TranslateContextType = {
   setLang: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export type GetTextProp = {
-  __: GetText;
-}
-
 type SetLang = (lang: string) => void;
 export type SetLangHookType = [lang: string, setLang: SetLang];
 
