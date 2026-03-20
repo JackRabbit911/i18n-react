@@ -4,6 +4,7 @@
 - Retrieves the necessary translations upon request from the server as a key-value object
 - Caches the retrieved data. Cached data is not re-requested
 - Option to set a cache limit
+- It is possible to receive the entire translate map in one request.
 - You can implement any backend contract
 - Doesn't depend on any libraries other than React itself
 ## Usage
@@ -53,7 +54,11 @@ export type TranslateType = {
   [key: string]: string;
 }
 export type FetchTranslateType = (lang: string, keys: string[]) => Promise<TranslateType>
+//or like this: (if you want to get the entire translation table in one request)
+export type FetchTranslateType = (lang: string, keys: null) => Promise<TranslateType>
 ```
+*If you use `fetchAllMap()`, set the delay parameter to 0*
+
 Recommendation: Install the DEMO and see what works and what doesn't. It's very simple:
 ```bash
 git clone https://github.com/JackRabbit911/i18n-react
@@ -63,6 +68,6 @@ npm run serve
 ```
 *In the console, you'll see which port the server is running on. In your browser, go to `localhost:PORT`*
 
-Check out the example configuration (file i18n/config.ts) and the example fetchTranslate() function (file i18n/utils.ts).
+Check out the example configuration (file i18n/config.ts) and the example fetchTranslate() and fetchAllMap() functions (file i18n/utils.ts).
 
 That's all for now. Good luck!
