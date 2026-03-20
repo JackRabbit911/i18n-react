@@ -10,6 +10,10 @@ export const getMap = (lang, keys) => {
         const content = readFileSync(filename, 'utf8')
         const dataObject = parse(content)
 
+        if (!keys) {
+            return dataObject
+        }
+
         const mapArray = keys.map((key) => Object.hasOwn(dataObject, key) ?
             [key, dataObject[key]] : [key, key])
         
