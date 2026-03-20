@@ -20,6 +20,16 @@ app.post('/api/gettranslate', (req, res) => {
   res.json(response)
 });
 
+app.get('/api/gettranslate', (req, res) => {
+  const lang = req.acceptsLanguages(['en', 'de', 'ru'])
+  const response = {
+    success: true,
+    result: getMap(lang, null),
+  }
+
+  res.json(response)
+});
+
 app.use((req, res) => {
   res.status(404).send('404 — Not Found')
 })

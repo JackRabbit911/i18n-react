@@ -1,4 +1,4 @@
-import { DEFAULT_LANG, limit, SUPPORTED_LANGS } from "./config";
+import { DEFAULT_LANG, SUPPORTED_LANGS, getTranslateUri, limit } from "./config";
 import type { TranslateType } from "./types";
 
 export const sprintf = (str: string, ...argv: any[]): string => !argv.length ? str :
@@ -35,8 +35,9 @@ export const detectLangByUri = () => {
     return langs.includes(segments[0]) ? segments[0] : DEFAULT_LANG
 }
 
-export const fetchTranslate = (lang: string, keys: string[]): Promise<TranslateType> => (
-    fetch('http://localhost:8080/api/gettranslate', {
+//fetch translate by array keys
+export const fetchTranslate = (lang: string, keys: string[] | null): Promise<TranslateType> => (
+    fetch(getTranslateUri, {
         method: 'POST',
         headers: {
             'Accept-Language': lang,
@@ -46,3 +47,16 @@ export const fetchTranslate = (lang: string, keys: string[]): Promise<TranslateT
     }).then((response) => response.json())
         .then((data) => data.result)
 )
+
+//fetch all translates
+export const fetchAllMap = (lang: string, keys: null): Promise<TranslateType> => {
+    keys
+    return fetch(getTranslateUri, {
+        method: 'GET',
+        headers: {
+            'Accept-Language': lang,
+            'Content-Type': 'application/json'
+        },
+    }).then((response) => response.json())
+        .then((data) => data.result)
+}
