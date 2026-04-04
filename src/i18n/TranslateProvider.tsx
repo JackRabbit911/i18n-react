@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useRef, useState } from "react";
 
 import { useDebounce } from "./hooks";
 import { sprintf, updateTranslate } from "./utils";
-import { delay, detectLang, getTranslate } from "./config";
+import { defaultTranslateKeys, delay, detectLang, getTranslate } from "./config";
 import type { Argv, TranslateContextType, TranslateType } from "./types";
 
 export const TranslateContext = createContext<TranslateContextType | undefined>(undefined)
@@ -15,7 +15,7 @@ type Props = {
 const TranslateProvider = ({ deps = [], children }: Props) => {
   const [translate, setTranslate] = useState<TranslateType>({})
   const [lang, setLang] = useState<string>(detectLang())
-  const translateKeys = useRef<string[]>([])
+  const translateKeys = useRef<string[]>(defaultTranslateKeys)
 
   const gettext = useCallback((key: string, ...argv: Argv) => {
     if (Object.hasOwn(translate, key)) {

@@ -6,3 +6,7 @@ Cond3Key: Content subject to 3
 Cond1GlobKey: Content under global condition 1
 Cond2GlobKey: Content under global condition 2
 Cond3GlobKey: Content under global condition 3
+
+defaulttKey1: Translate default key 1
+defaulttKey2: Translate default key 2
+defaulttKey3: Translate default key 3
