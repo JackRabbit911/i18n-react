@@ -69,5 +69,6 @@ npm run serve
 *In the console, you'll see which port the server is running on. In your browser, go to `localhost:PORT`*
 
 Check out the example configuration (file i18n/config.ts) and the example fetchTranslate() and fetchAllMap() functions (file i18n/utils.ts).
+The defaltTranslateKeys constant has been added to the config, which contains an array of keys sent to the server once during the first request.
 
 That's all for now. Good luck!
