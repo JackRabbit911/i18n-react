@@ -41,7 +41,7 @@ const TranslateProvider = ({ deps = [], children }: Props) => {
     const diff = translateKeys.current.filter(x => !keys.includes(x));
 
     if (diff.length > 0) {
-      debouncedFetch(lang, translateKeys.current)
+      debouncedFetch(lang, diff)
     }
   }, deps)
 
