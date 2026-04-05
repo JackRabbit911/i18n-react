@@ -16,6 +16,9 @@ const Page3 = () => {
       </h1>
       <div>
         {__('Conditional rendering')} (useUnit)
+        <p className="text-success text-xs">
+          {__('correctKey')}{' '}"fetch by keys"
+        </p>
         <div>
           <button
             className="btn btn-outline m-1"

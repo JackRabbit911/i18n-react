@@ -19,6 +19,9 @@ const Page1 = () => {
       <Child11 __={__} />
       <div>
         {__('Conditional rendering')} (useState)
+        <p className="text-warning text-xs">
+          {__('incorrectKey')}{' '}"fetch by keys"
+        </p>
         <div>
           <button
             className="btn btn-outline m-1"
