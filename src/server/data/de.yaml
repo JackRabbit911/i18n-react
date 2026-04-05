@@ -18,6 +18,8 @@ Cond1GlobKey: Inhalt unter globaler Bedingung 1
 Cond2GlobKey: Inhalt unter globaler Bedingung 2
 Cond3GlobKey: Inhalt unter globaler Bedingung 3
 
-defaulttKey1: Standardschlüssel übersetzen 1
-defaulttKey2: Standardschlüssel übersetzen 2
-defaulttKey3: Standardschlüssel übersetzen 3
+modalContent: Inhalt des Modal-Fensters
+use: wir verwenden
+
+incorrectKey: Funktioniert nicht richtig, wenn Folgendes verwendet wird
+correctKey: Es funktioniert korrekt, wenn
