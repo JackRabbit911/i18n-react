@@ -7,6 +7,8 @@ import { useTranslate } from "i18n/hooks"
 import Sandwich from "./reused/icons/Sanwich"
 import LangLink from "LangSwitcher/LangLink"
 import ThemeToggler from "./reused/ThemeToggler"
+import { modalOpened } from "./reused/Modal/store"
+import ModalContents from "pages/ModalContents"
 
 const Navbar = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null)
@@ -19,6 +21,10 @@ const Navbar = () => {
   const onBrandClick = () => {
     pageSetted(0)
     detailsRef.current?.removeAttribute('open')
+  }
+
+  const onClick = () => () => {
+    modalOpened(<ModalContents />)
   }
 
   return (
@@ -51,6 +57,9 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
+        <button className="btn" onClick={onClick()}>
+          modal
+        </button>
         <div className="flex-none">
           <ThemeToggler />
           <LangSwitcher />
