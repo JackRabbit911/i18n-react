@@ -12,7 +12,7 @@ export const SUPPORTED_LANGS = {
 export const DEFAULT_LANG = 'en'
 
 export const defaultTranslateKeys = [
-    'defaulttKey1', 'defaultKey2', 'defaultKey3',
+    'modalContent', 'use',
 ]
 
 export const limit = null //cache limit in pairs key-valaue
