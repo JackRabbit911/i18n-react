@@ -1,4 +1,4 @@
-import { DEFAULT_LANG, SUPPORTED_LANGS, getTranslateUri, limit } from "./config";
+import { DEFAULT_LANG, SUPPORTED_LANGS, defaultTranslateKeys, getTranslateUri, limit } from "./config";
 import type { TranslateType } from "./types";
 
 export const sprintf = (str: string, ...argv: any[]): string => !argv.length ? str :
@@ -21,7 +21,7 @@ export const updateTranslate = (
     }
 
     setTranslate({ ...translate, ...result })
-    translateKeys.current.length = 0
+    translateKeys.current = defaultTranslateKeys
     result = {}
 }
 
