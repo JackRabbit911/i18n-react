@@ -7,6 +7,8 @@ Cond1GlobKey: Content under global condition 1
 Cond2GlobKey: Content under global condition 2
 Cond3GlobKey: Content under global condition 3
 
-defaulttKey1: Translate default key 1
-defaulttKey2: Translate default key 2
-defaulttKey3: Translate default key 3
+modalContent: Modal window content
+use: we use
+
+incorrectKey: It will not work correctly in case
+correctKey: It will work correctly in case

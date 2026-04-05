@@ -19,7 +19,7 @@ const getReasonPhrase = (status: number) => {
     case 555:
       return '555 | Invalid input data'
     default:
-      return `${status} | Хз, что это...`
+      return `${status} | unknown error`
   }
 }
 
