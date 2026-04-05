@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import Navbar from './Navbar';
+import Modal from './reused/Modal';
 
 interface Props {
   children: ReactNode;
@@ -8,9 +9,12 @@ interface Props {
 const Layout = ({ children }: Props) => (
   <div className="mx-auto flex flex-col min-h-screen">
     <Navbar />
-    <div className="navbar md:container lg:w-3xl xl:w-6xl mx-auto">
-      {children}
+    <div className="flex justify-center mt-4">
+      <div className="w-full md:w-lg">
+        {children}
+      </div>
     </div>
+    <Modal />
   </div>
 )
 
