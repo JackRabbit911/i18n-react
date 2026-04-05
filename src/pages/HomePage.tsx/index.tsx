@@ -5,8 +5,8 @@ const HomePage = () => {
   const __ = useTranslate()
 
   return (
-    <div className="p-1 border border-zinc-600">
-      <h1>{__('Hello')}</h1>    
+    <div className="p-1 border border-zinc-600 w-full">
+      <h1 className="text-xl">{__('Hello')}</h1>    
         <Child01 __={__} />
     </div>
   )
