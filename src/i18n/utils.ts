@@ -7,6 +7,12 @@ export const sprintf = (str: string, ...argv: Argv): string =>
     str.replace(/%s/g, () => argv.length ? String(argv.shift()) : '%s');
 
 export const detectLangByUri = () => {
+    // window может отсутствовать (node/SSR-запуск модулей, тянущих синглтон):
+    // без DOM-детекции возвращаем язык по умолчанию
+    if (typeof window === 'undefined') {
+        return DEFAULT_LANG
+    }
+
     const segments = window.location.pathname.split('/').filter(Boolean)
     const langs = Object.keys(SUPPORTED_LANGS).filter((value) => value !== DEFAULT_LANG)
     return langs.includes(segments[0]) ? segments[0] : DEFAULT_LANG
