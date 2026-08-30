@@ -6,12 +6,5 @@ export type TranslateType = {
   [key: string]: string;
 }
 
-export type TranslateContextType = {
-  gettext: GetText;
-  setTranslate: React.Dispatch<React.SetStateAction<TranslateType>>;
-  lang: string;
-  setLang: React.Dispatch<React.SetStateAction<string>>;
-}
-
 type SetLang = (lang: string) => void;
 export type SetLangHookType = [lang: string, setLang: SetLang];
