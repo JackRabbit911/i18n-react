@@ -12,6 +12,7 @@
     "serve": "npm run build; node src/server/server.js"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
     "@tailwindcss/vite": "^4.2.1",
     "cors": "^2.8.6",
     "daisyui": "^5.5.19",
