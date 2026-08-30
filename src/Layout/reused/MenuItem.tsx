@@ -18,15 +18,15 @@ const MenuItem = ({ label, pageNum, extraClass, onClick }: Props) => {
   const link = `/page/${pageNum}`
 
   return (
-    <LangLink to={link}>
-      <li
-        className={className}
-        onClick={onClick}
-      >
+    <li
+      className={className}
+      onClick={onClick}
+    >
+      <LangLink to={link}>
         {label}
-      </li>
-    </LangLink>
+      </LangLink>
+    </li>
   )
-  }
+}
 
-  export default MenuItem
+export default MenuItem

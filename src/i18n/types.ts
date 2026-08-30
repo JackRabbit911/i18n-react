@@ -15,5 +15,3 @@ export type TranslateContextType = {
 
 type SetLang = (lang: string) => void;
 export type SetLangHookType = [lang: string, setLang: SetLang];
-
-export type FetchTranslateType = (lang: string, keys: string[]) => Promise<TranslateType>

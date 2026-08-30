@@ -8,8 +8,8 @@ type Props = {
 const Child21 = ({ t }: Props) => {
   return (
     <div className="p-1 ms-4 border border-zinc-600">
-      <h2>{t('Page%', '21')}</h2>
-      <p>{t('first')} {t('child')} {t('from')} {t('Page%', 2)}</p>
+      <h2>{t('Page%s', '21')}</h2>
+      <p>{t('first')} {t('child')} {t('from')} {t('Page%s', 2)}</p>
       <p>{t('content21')}</p>
       <Child211 t={t} />
     </div>

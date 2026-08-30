@@ -5,14 +5,20 @@ import Page1 from "./Page1"
 import Page2 from "./Page2"
 import Page3 from "./Page3"
 import { pageSetted } from "./store"
+import { SUPPORTED_LANGS } from "i18n/config"
 import ErrorCmp from "Layout/reused/ErrorCmp"
 
 const PageWrapper = () => {
-  const { page } = useParams()
+  const { lang, page } = useParams()
 
   useEffect(() => {
     pageSetted(Number(page) || 0)
   }, [page])
+
+  // ':lang?' matches any first segment — unknown ones are a 404, not a page
+  if (lang !== undefined && !Object.hasOwn(SUPPORTED_LANGS, lang)) {
+    return <ErrorCmp status={404} />
+  }
 
   switch (page) {
     case '1': return <Page1 />

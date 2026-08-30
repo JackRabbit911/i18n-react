@@ -5,8 +5,8 @@ export const subPageSetted = createEvent<number>()
 export const subPageReset = createEvent()
 
 export const $subPageNum = createStore(1)
-    .on(subPageSetted, (_, store) => store)
+    .on(subPageSetted, (_, num) => num)
     .reset(subPageReset)
 
 export const $page = createStore<number>(0)
-    .on(pageSetted, (_, store) => store)
+    .on(pageSetted, (_, num) => num)

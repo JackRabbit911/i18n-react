@@ -1,12 +1,12 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { useCallback, useRef } from 'react';
 
 import { DEFAULT_LANG } from "./config"
-import { TranslateContext } from "./TranslateProvider"
+import { TranslateContext } from "./context"
 
 import type { SetLangHookType } from "./types"
 
-const useTranlateContext = () => {
+const useTranslateContext = () => {
     const context = useContext(TranslateContext)
 
     if (context === undefined) {
@@ -17,43 +17,52 @@ const useTranlateContext = () => {
 }
 
 export const useTranslate = () => {
-    const context = useTranlateContext()
-    
+    const context = useTranslateContext()
+
     return context.gettext
 }
 
 export const useSetLang = (): SetLangHookType => {
-    const context = useTranlateContext()
+    const context = useTranslateContext()
 
-    const setLang =  (lang: string) => {
+    const setLang = (lang: string) => {
         document.querySelector('html')?.setAttribute('lang', lang)
         context.setLang(lang)
+        // clearing translate makes the provider effect fetch
+        // the new language on the next render
         context.setTranslate({})
     }
 
-    return [ context.lang, setLang ]
+    return [context.lang, setLang]
 }
 
 export const useLangPrefix = () => {
-    const context = useTranlateContext()
+    const context = useTranslateContext()
 
     return (context.lang === DEFAULT_LANG) ? '' : context.lang
 }
 
-export const useDebounce = <T extends (...args: any[]) => void>(
-  callback: T,
-  delay: number
+export const useDebounce = <A extends unknown[]>(
+    callback: (...args: A) => void,
+    delay: number
 ) => {
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  return useCallback(
-    (...args: Parameters<T>) => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
-      }
+    // cancel pending callback on unmount
+    useEffect(() => () => {
+        if (timerRef.current) {
+            clearTimeout(timerRef.current)
+        }
+    }, [])
 
-      timerRef.current = setTimeout(() => {
-        callback(...args)
-      }, delay)
-    }, [callback, delay])
+    return useCallback(
+        (...args: A) => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current)
+            }
+
+            timerRef.current = setTimeout(() => {
+                callback(...args)
+            }, delay)
+        }, [callback, delay])
 }

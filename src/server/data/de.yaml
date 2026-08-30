@@ -1,5 +1,5 @@
 Homepage: Startseite
-Page%: Seite%
+Page%s: Seite%s
 Hello: Hallo
 friend: freund
 grandson: enkel
@@ -10,9 +10,9 @@ How are You?: Wie geht's?
 content2: Einzigartiger Inhalt für die zweite Seite
 content21: Einzigartiger Inhalt für das erste Kind der zweiten Seite
 Conditional rendering: Bedingte Darstellung
-Condition %: Zustand %
+Condition %s: Zustand %s
 Cond1Key: Inhalte unterliegen 1
-Cond2Key: Inhalte unterliegen 3
+Cond2Key: Inhalte unterliegen 2
 Cond3Key: Inhalte unterliegen 3
 Cond1GlobKey: Inhalt unter globaler Bedingung 1
 Cond2GlobKey: Inhalt unter globaler Bedingung 2

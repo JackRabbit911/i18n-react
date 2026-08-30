@@ -6,25 +6,31 @@ const app = express();
 const PORT = 8080;
 const staticRootUrl = new URL('../../dist/', import.meta.url).pathname;
 
+const DEFAULT_LANG = 'en';
+const SUPPORTED_LANGS = ['en', 'de', 'ru'];
+
+// acceptsLanguages returns false when nothing matches — fall back to default
+const detectLang = (req) => req.acceptsLanguages(SUPPORTED_LANGS) || DEFAULT_LANG;
+
 app.use(cors());
 app.use(express.static(staticRootUrl))
 app.use(express.json())
 
 app.post('/api/gettranslate', (req, res) => {
-  const lang = req.acceptsLanguages(['en', 'de', 'ru'])
+  const filter = req.body?.filter;
+  const keys = Array.isArray(filter) ? filter.filter(k => typeof k === 'string') : null;
   const response = {
     success: true,
-    result: getMap(lang, req.body.filter),
+    result: getMap(detectLang(req), keys),
   }
 
   res.json(response)
 });
 
 app.get('/api/gettranslate', (req, res) => {
-  const lang = req.acceptsLanguages(['en', 'de', 'ru'])
   const response = {
     success: true,
-    result: getMap(lang, null),
+    result: getMap(detectLang(req), null),
   }
 
   res.json(response)

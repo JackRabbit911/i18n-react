@@ -1,8 +1,10 @@
 import { createEvent, createStore } from "effector"
 
-export const modalOpened = createEvent<React.ReactNode| string>()
+// a flag, not a component — content is picked in Modal,
+// JSX in an effector store is fragile (stale closures, serialization)
+export const modalOpened = createEvent()
 export const modalClosed = createEvent()
 
-export const $modalComponent = createStore<React.ReactNode | string | null>(null)
-    .on(modalOpened, (_, data) => data)
+export const $modalOpened = createStore(false)
+    .on(modalOpened, () => true)
     .reset(modalClosed)

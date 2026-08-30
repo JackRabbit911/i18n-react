@@ -4,11 +4,10 @@ import LangSwitcher from "LangSwitcher"
 import MenuItem from "./reused/MenuItem"
 import { pageSetted } from "pages/store"
 import { useTranslate } from "i18n/hooks"
-import Sandwich from "./reused/icons/Sanwich"
+import Sandwich from "./reused/icons/Sandwich"
 import LangLink from "LangSwitcher/LangLink"
 import ThemeToggler from "./reused/ThemeToggler"
 import { modalOpened } from "./reused/Modal/store"
-import ModalContents from "pages/ModalContents"
 
 const Navbar = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null)
@@ -23,8 +22,8 @@ const Navbar = () => {
     detailsRef.current?.removeAttribute('open')
   }
 
-  const onClick = () => () => {
-    modalOpened(<ModalContents />)
+  const onModalClick = () => {
+    modalOpened()
   }
 
   return (
@@ -51,13 +50,13 @@ const Navbar = () => {
               </button>
             </LangLink>
             <ul className="menu menu-horizontal px-1 py-1 hidden sm:flex">
-              <MenuItem label={__('Page%', '1')} pageNum={1} extraClass="mx-1 px-1 pt-1.5 pb-2" />
-              <MenuItem label={__('Page%', '2')} pageNum={2} extraClass="mx-1 px-1 pt-1.5 pb-2" />
-              <MenuItem label={__('Page%', '3')} pageNum={3} extraClass="mx-1 px-1 pt-1.5 pb-2" />
+              <MenuItem label={__('Page%s', '1')} pageNum={1} extraClass="mx-1 px-1 pt-1.5 pb-2" />
+              <MenuItem label={__('Page%s', '2')} pageNum={2} extraClass="mx-1 px-1 pt-1.5 pb-2" />
+              <MenuItem label={__('Page%s', '3')} pageNum={3} extraClass="mx-1 px-1 pt-1.5 pb-2" />
             </ul>
           </div>
         </div>
-        <button className="btn" onClick={onClick()}>
+        <button className="btn" onClick={onModalClick}>
           modal
         </button>
         <div className="flex-none">
