@@ -7,7 +7,7 @@ const ModalContents = () => {
     <div>
       {__('modalContent')}
       <p className="text-sm text-accent">
-        {__('use')} defaultTanslateKeys
+        {__('use')} defaultTranslateKeys
       </p>
     </div>
   )

@@ -8,17 +8,17 @@ type Props = {
 
 const LangItem = ({ tuple, onClick }: Props) => {
   const [lang, label] = tuple
-  const homeLink = lang === DEFAULT_LANG ? '' : lang
+  const homeLink = lang === DEFAULT_LANG ? '/' : `/${lang}`
 
   return (
-    <Link to={homeLink}>
-      <li
-        className="cursor-pointer hover:menu-active p-2 rounded-sm"
-        onClick={onClick(lang)}
-      >
+    <li
+      className="cursor-pointer hover:menu-active p-2 rounded-sm"
+      onClick={onClick(lang)}
+    >
+      <Link to={homeLink}>
         {label}
-      </li>
-    </Link>
+      </Link>
+    </li>
   )
 }
 

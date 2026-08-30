@@ -12,7 +12,9 @@ interface Props {
 const LangLink = ({ to, children }: Props) => {
   const prefix = useLangPrefix()
   const link = trimSlash(to)
-  const path = trimSlash([prefix, link].join('/'))
+  // leading '/' makes react-router resolve from root;
+  // relative links resolve against the current URL and break on nested pages
+  const path = '/' + [prefix, link].filter(Boolean).join('/')
 
   return (
     <Link to={path}>

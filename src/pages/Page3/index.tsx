@@ -12,7 +12,7 @@ const Page3 = () => {
   return (
     <div className="p-1 border border-zinc-600">
       <h1>
-        {__('Page%', 3)}
+        {__('Page%s', 3)}
       </h1>
       <div>
         {__('Conditional rendering')} (useUnit)
@@ -25,21 +25,21 @@ const Page3 = () => {
             onClick={() => subPageSetted(1)}
             disabled={globalNum === 1}
           >
-            {__('Condition %', 1)}
+            {__('Condition %s', 1)}
           </button>
           <button
             className="btn btn-outline m-1"
             onClick={() => subPageSetted(2)}
             disabled={globalNum === 2}
           >
-            {__('Condition %', 2)}
+            {__('Condition %s', 2)}
           </button>
           <button
             className="btn btn-outline m-1"
             onClick={() => subPageSetted(3)}
             disabled={globalNum === 3}
           >
-            {__('Condition %', 3)}
+            {__('Condition %s', 3)}
           </button>
           <div className="p-1 border border-zinc-600">
             <Cond4 __={__} num={globalNum} />

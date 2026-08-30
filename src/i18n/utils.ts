@@ -1,33 +1,10 @@
-import { DEFAULT_LANG, SUPPORTED_LANGS, defaultTranslateKeys, getTranslateUri, limit } from "./config";
-import type { TranslateType } from "./types";
+import { DEFAULT_LANG, SUPPORTED_LANGS, getTranslateUri } from "./config";
+import type { Argv, TranslateType } from "./types";
 
-export const sprintf = (str: string, ...argv: any[]): string => !argv.length ? str :
-    sprintf(str = str.replace("%", argv.shift()), ...argv);
-
-export const updateTranslate = (
-    translate: TranslateType,
-    result: TranslateType,
-    translateKeys: React.RefObject<string[]>,
-    setTranslate: React.Dispatch<React.SetStateAction<TranslateType>>
-) => {
-    const keys = Object.keys(translate)
-
-    if (limit) {
-        const n = keys.length + Object.keys(result).length - limit
-
-        if (n > 0) {
-            keys.slice(0, n).forEach(key => delete translate[key]);
-        }
-    }
-
-    setTranslate({ ...translate, ...result })
-    translateKeys.current = defaultTranslateKeys
-    result = {}
-}
-
-export const detectLangByAttribute = (): string => (
-    document.querySelector('html')?.getAttribute('lang') || DEFAULT_LANG || navigator.language.split('-')[0]
-)
+// sprintf with "%s" placeholders: each placeholder consumes one argv,
+// so values containing "%" can't hijack the next substitution
+export const sprintf = (str: string, ...argv: Argv): string =>
+    str.replace(/%s/g, () => argv.length ? String(argv.shift()) : '%s');
 
 export const detectLangByUri = () => {
     const segments = window.location.pathname.split('/').filter(Boolean)
@@ -47,16 +24,3 @@ export const fetchTranslate = (lang: string, keys: string[] | null): Promise<Tra
     }).then((response) => response.json())
         .then((data) => data.result)
 )
-
-//fetch all translates
-export const fetchAllMap = (lang: string, keys: null): Promise<TranslateType> => {
-    keys
-    return fetch(getTranslateUri, {
-        method: 'GET',
-        headers: {
-            'Accept-Language': lang,
-            'Content-Type': 'application/json'
-        },
-    }).then((response) => response.json())
-        .then((data) => data.result)
-}

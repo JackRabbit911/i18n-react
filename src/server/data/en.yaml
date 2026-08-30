@@ -1,5 +1,16 @@
+Hello: Hello
+Homepage: Homepage
+Page%s: Page%s
+first: first
+child: child
+grandson: grandson
+from: from
+friend: friend
+How are You?: How are you?
 content2: Unique content for the second page
 content21: Unique content for the first child of the second page
+Conditional rendering: Conditional rendering
+Condition %s: Condition %s
 Cond1Key: Content subject to 1
 Cond2Key: Content subject to 2
 Cond3Key: Content subject to 3

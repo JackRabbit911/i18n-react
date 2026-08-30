@@ -15,7 +15,7 @@ const Page1 = () => {
 
   return (
     <div className="p-1 border border-zinc-600">
-      <h1>{__('Page%', 1)}</h1>
+      <h1>{__('Page%s', 1)}</h1>
       <Child11 __={__} />
       <div>
         {__('Conditional rendering')} (useState)
@@ -28,21 +28,21 @@ const Page1 = () => {
             onClick={onCondition(1)}
             disabled={num === 1}
           >
-            {__('Condition %', 1)}
+            {__('Condition %s', 1)}
           </button>
           <button
             className="btn btn-outline m-1"
             onClick={onCondition(2)}
             disabled={num === 2}
           >
-            {__('Condition %', 2)}
+            {__('Condition %s', 2)}
           </button>
           <button
             className="btn btn-outline m-1"
             onClick={onCondition(3)}
             disabled={num === 3}
           >
-            {__('Condition %', 3)}
+            {__('Condition %s', 3)}
           </button>
           <div className="p-1 border border-zinc-600">
             <Cond1 __={__} num={num} />
