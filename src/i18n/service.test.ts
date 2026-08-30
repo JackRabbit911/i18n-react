@@ -90,3 +90,86 @@ describe('I18nService: конвейер', () => {
     consoleError.mockRestore()
   })
 })
+
+describe('I18nService: языки', () => {
+  it('setLang уведомляет подписчиков сразу, словарь нового языка подтягивается конвейером', async () => {
+    const transport = makeTransport()
+    const s = new I18nService({ transport, lang: 'en', delay: 0, preloadKeys: [] })
+    const listener = vi.fn()
+    s.subscribe(listener)
+
+    s.setLang('ru')
+    expect(listener).toHaveBeenCalledTimes(1) // мгновенный notify
+    expect(s.getLang()).toBe('ru')
+
+    s.t('hello')
+    await vi.advanceTimersByTimeAsync(0)
+    expect(transport).toHaveBeenCalledWith('ru', ['hello'])
+    expect(listener).toHaveBeenCalledTimes(2)
+  })
+
+  it('поздний ответ старого языка не уведомляет и не портит новый язык', async () => {
+    let resolveEn!: (value: TranslateType) => void
+    const transport = vi.fn((lang: string) =>
+      lang === 'en'
+        ? new Promise<TranslateType>(resolve => { resolveEn = resolve })
+        : Promise.resolve({ hello: 'привет' }))
+    const s = new I18nService({ transport, lang: 'en', delay: 0, preloadKeys: [] })
+    const listener = vi.fn()
+    s.subscribe(listener)
+
+    s.t('hello')                          // en-запрос завис
+    await vi.advanceTimersByTimeAsync(0)
+    expect(listener).not.toHaveBeenCalled()
+
+    s.setLang('ru')                       // notify №1
+    s.t('hello')                          // ru-запрос — свой, per-lang
+    await vi.advanceTimersByTimeAsync(0)
+    expect(listener).toHaveBeenCalledTimes(2) // setLang + ru-мерж
+    expect(s.t('hello')).toBe('привет')
+
+    resolveEn({ hello: 'hello-en-late' }) // старый язык доехал поздно
+    await vi.advanceTimersByTimeAsync(0)
+    expect(listener).toHaveBeenCalledTimes(2) // без нового notify
+    expect(s.t('hello')).toBe('привет')       // ru не загрязнён
+    expect(s.getDict('en').get('hello')).toBe('hello-en-late') // лёг в кэш en
+  })
+
+  it('возврат на загруженный язык не ходит в сеть', async () => {
+    const transport = makeTransport()
+    const s = new I18nService({ transport, lang: 'en', delay: 0, preloadKeys: [] })
+
+    s.setLang('ru')
+    s.t('hello')
+    await vi.advanceTimersByTimeAsync(0)
+    const callsAfterFirstLoad = transport.mock.calls.length
+
+    s.setLang('en')
+    s.setLang('ru')
+    expect(s.t('hello')).toBe('HELLO') // из кэша
+    await vi.advanceTimersByTimeAsync(100)
+    expect(transport.mock.calls.length).toBe(callsAfterFirstLoad)
+  })
+
+  it('preloadKeys фетчатся при старте и при каждой смене языка', async () => {
+    const transport = makeTransport()
+    const s = new I18nService({ transport, lang: 'en', delay: 0, preloadKeys: ['modalContent'] })
+
+    await vi.advanceTimersByTimeAsync(0)
+    expect(transport).toHaveBeenCalledWith('en', ['modalContent'])
+
+    s.setLang('ru')
+    await vi.advanceTimersByTimeAsync(0)
+    expect(transport).toHaveBeenCalledWith('ru', ['modalContent'])
+  })
+
+  it('setLang на тот же язык — no-op без notify', () => {
+    const transport = makeTransport()
+    const s = new I18nService({ transport, lang: 'en', preloadKeys: [] })
+    const listener = vi.fn()
+    s.subscribe(listener)
+
+    s.setLang('en')
+    expect(listener).not.toHaveBeenCalled()
+  })
+})

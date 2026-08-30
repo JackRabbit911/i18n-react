@@ -23,6 +23,7 @@ export class I18nService {
   private readonly transport: Transport
   private readonly delay: number
   private readonly limit: number | null
+  private readonly preloadKeys: readonly string[]
 
   private lang: string
   private dicts = new Map<string, ReadonlyMap<string, string>>()
@@ -36,7 +37,9 @@ export class I18nService {
     this.transport = options.transport ?? (async () => ({}))
     this.delay = options.delay ?? 0
     this.limit = options.limit ?? null
+    this.preloadKeys = options.preloadKeys ?? []
     this.lang = options.lang ?? ''
+    this.enqueue(this.preloadKeys)
   }
 
   readonly t = (key: string, ...argv: Argv): string => {
@@ -67,6 +70,16 @@ export class I18nService {
 
   // интроспекция для тестов/отладки
   readonly getPending = (): string[] => [...this.pending]
+
+  // смена языка — тот же конвейер: мгновенный notify, словарь нового языка
+  // подтягивается demand-driven фетчем (или мгновенно из кэша)
+  readonly setLang = (lang: string): void => {
+    if (lang === this.lang) return
+    this.lang = lang
+    this.version += 1
+    this.notify()
+    this.enqueue(this.preloadKeys)
+  }
 
   private enqueue(keys: Iterable<string>): void {
     const flight = this.inFlight.get(this.lang) ?? new Set<string>()
