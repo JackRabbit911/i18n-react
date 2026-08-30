@@ -54,8 +54,26 @@ t(key) → ключа нет в словаре текущего языка → p
 
 - `src/i18n/service.ts` — ядро: класс с `t`, `setLang`, `getLang`, `subscribe`; конвейер из §3.1.
 - `src/i18n/adapters.ts` (или расширение `hooks.ts`) — хуки на `useSyncExternalStore`, сигнатуры прежние.
+- `src/i18n/effector.ts` — **effector-зеркало** (в объёме, решение от 2026-08-30): read-only проекция сервиса в effector-сторы `$lang`, `$dict`. Поток данных строго однонаправленный — сервис → effector; запись в переводы через сторы запрещена (смена языка только через `i18n.setLang()`). Зеркало нужно для **реактивности** (чтение из не-React кода — прямой `import { i18n }`): effector-сторы могут участвовать в `combine`/`sample` и реагировать на смену языка/приход переводов. Одна глобальная подписка `i18n.subscribe()` гонит изменения в события → сторы. Ядро про effector не знает ничего: смена стейт-менеджера переписывает только файл-мост. Пример:
+
+  ```ts
+  // src/i18n/effector.ts
+  const langChanged = createEvent<string>()
+  const dictMerged = createEvent<ReadonlyMap<string, string>>()
+
+  export const $lang = createStore(i18n.getLang())
+  export const $dict = createStore(i18n.getDictSnapshot())
+
+  $lang.on(langChanged, (_, lang) => lang)
+  $dict.on(dictMerged, (_, dict) => dict)
+
+  i18n.subscribe(() => {
+    langChanged(i18n.getLang())
+    dictMerged(i18n.getDictSnapshot())
+  })
+  ```
+
 - `TranslateProvider.tsx` — удаляется; `App.tsx` упрощается.
-- Effector-зеркало (`$lang`, `$translate` через `subscribe`) — **вне объёма**, подключается отдельной задачей при первом не-React потребителе (YAGNI).
 
 ### 3.3 Отвергнутые альтернативы
 
@@ -74,5 +92,6 @@ t(key) → ключа нет в словаре текущего языка → p
 
 - `eslint .` — 0/0; `tsc -b` — 0 ошибок; `vite build` — ✓.
 - Юнит-тесты ядра (node, фейковый транспорт/таймеры): батчинг «N вызовов за тик → 1 запрос»; устаревший ответ не notify; смена языка и возврат — из кэша без сети; `%s`-подстановки.
+- Тест effector-зеркала: изменение сервиса отражается в `$lang`/`$dict`; однонаправленность (зеркало не пишет в сервис).
 - Живой запуск: смена языка, навигация по страницам, modal, hard refresh — поведение прежнее; Network: повторное включение языка не фетчит.
 - Ререндеры: подтверждение, что при мерже словаря ререндерятся только читатели `useTranslate` (React Profiler или лог-пробы).
