@@ -172,6 +172,23 @@ describe('I18nService: языки', () => {
     s.setLang('en')
     expect(listener).not.toHaveBeenCalled()
   })
+
+  it('setLang не перезапрашивает preloadKeys, уже лежащие в словаре целевого языка (кэш-хит)', async () => {
+    const transport = makeTransport()
+    const s = new I18nService({ transport, lang: 'en', delay: 0, preloadKeys: ['modalContent'] })
+
+    await vi.advanceTimersByTimeAsync(0) // en: modalContent → MODALCONTENT
+    expect(transport).toHaveBeenCalledTimes(1)
+
+    s.setLang('ru')
+    await vi.advanceTimersByTimeAsync(0) // ru: modalContent → MODALCONTENT
+    expect(transport).toHaveBeenCalledTimes(2)
+
+    s.setLang('en') // ключ уже в словаре en — третий запрос не нужен
+    await vi.advanceTimersByTimeAsync(100)
+    expect(transport).toHaveBeenCalledTimes(2)
+    expect(s.t('modalContent')).toBe('MODALCONTENT')
+  })
 })
 
 describe('I18nService: limit', () => {

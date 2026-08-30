@@ -84,9 +84,12 @@ export class I18nService {
   private enqueue(keys: Iterable<string>): void {
     const flight = this.inFlight.get(this.lang) ?? new Set<string>()
     this.inFlight.set(this.lang, flight)
+    const dict = this.dicts.get(this.lang)
 
     let added = false
     for (const key of keys) {
+      // ключ уже в словаре целевого языка — сетевой запрос не нужен (кэш-хит)
+      if (dict?.has(key)) continue
       if (flight.has(key) || this.pending.has(key)) continue
       this.pending.add(key)
       added = true
