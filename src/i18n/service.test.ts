@@ -173,3 +173,48 @@ describe('I18nService: языки', () => {
     expect(listener).not.toHaveBeenCalled()
   })
 })
+
+describe('I18nService: limit', () => {
+  it('limit выселяет самые старые ключи внутри языка', async () => {
+    const transport = makeTransport()
+    const s = new I18nService({ transport, lang: 'en', delay: 0, limit: 2, preloadKeys: [] })
+
+    s.t('a'); s.t('b')
+    await vi.advanceTimersByTimeAsync(0) // словарь {a, b}
+
+    s.t('c')
+    await vi.advanceTimersByTimeAsync(0) // overflow=1 → 'a' выселен
+
+    expect(s.t('a')).toBe('a') // выпал → фолбэк на ключ (и повторная постановка)
+    expect(s.t('b')).toBe('B')
+    expect(s.t('c')).toBe('C')
+  })
+
+  it('limit=null (по умолчанию) ничего не выселяет', async () => {
+    const transport = makeTransport()
+    const s = new I18nService({ transport, lang: 'en', delay: 0, preloadKeys: [] })
+
+    s.t('a'); s.t('b'); s.t('c')
+    await vi.advanceTimersByTimeAsync(0)
+
+    expect(s.t('a')).toBe('A')
+    expect(s.t('b')).toBe('B')
+    expect(s.t('c')).toBe('C')
+  })
+
+  it('эвикция не затрагивает словари других языков', async () => {
+    const transport = makeTransport()
+    const s = new I18nService({ transport, lang: 'en', delay: 0, limit: 1, preloadKeys: [] })
+
+    s.t('a')
+    await vi.advanceTimersByTimeAsync(0)
+    s.setLang('ru')
+    s.t('b')
+    await vi.advanceTimersByTimeAsync(0)
+
+    expect(s.getDict('en').get('a')).toBe('A') // en не тронут
+    expect(s.getDict('ru').get('b')).toBe('B')
+    expect(s.getDict('en').size).toBe(1)
+    expect(s.getDict('ru').size).toBe(1)
+  })
+})
