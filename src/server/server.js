@@ -36,6 +36,12 @@ app.get('/api/gettranslate', (req, res) => {
   res.json(response)
 });
 
+// SPA fallback: client routes (:lang?/page/:page) must serve index.html on
+// hard refresh; only API paths get a plain 404
+app.get(/^\/(?!api\/).*/, (req, res) => {
+  res.sendFile(new URL('../../dist/index.html', import.meta.url).pathname)
+})
+
 app.use((req, res) => {
   res.status(404).send('404 — Not Found')
 })
